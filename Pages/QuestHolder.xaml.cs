@@ -15,8 +15,12 @@ public partial class QuestHolder : ContentPage
 		InitializeComponent();
 
         quests.Enqueue(new Quests.Group_00.Quest_00(GameState.TeamId));
+        quests.Enqueue(new Quests.Group_00.Quest_00(GameState.TeamId));
+        quests.Enqueue(new Quests.Group_00.Quest_00(GameState.TeamId));
+        quests.Enqueue(new Quests.Group_00.Quest_00(GameState.TeamId));
+        quests.Enqueue(new Quests.Group_00.Quest_00(GameState.TeamId));
 
-		for (int i = 0; i < GameState.TeamId % quests.Count; i++)
+        for (int i = 0; i < GameState.TeamId % quests.Count; i++)
 		{
 			quests.Enqueue(quests.Dequeue());
 		}
@@ -26,6 +30,8 @@ public partial class QuestHolder : ContentPage
 
 	private void SetQuest(BaseQuestView quest)
 	{
+		lScore.Text = $"Score: {GameState.Score}";
+
 		currentQuest= quest;
 		cvCurrentQuest.Content = quest;
 
@@ -61,6 +67,7 @@ public partial class QuestHolder : ContentPage
 		{
 			if (eAnswer.Text.Trim() == data.QuestAnswer.Trim())
 			{
+				GameState.Score += (GameState.QuestScore * data.ScorePercent) / 100;
                 LoadNext();
             }
 			else
@@ -72,7 +79,8 @@ public partial class QuestHolder : ContentPage
 		{
             if (data.QuestSuccess)
             {
-				LoadNext();
+                GameState.Score += (GameState.QuestScore * data.ScorePercent) / 100;
+                LoadNext();
             }
             else
             {

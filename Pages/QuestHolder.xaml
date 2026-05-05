@@ -8,15 +8,15 @@
 
         <Grid ColumnDefinitions="*, *" Grid.Row="0" ColumnSpacing="7.5">
             <Label x:Name="lQuestName" Text="Quest X" FontSize="Small"  HorizontalOptions="Center" Grid.Column="0"/>
-            <Label Text="Points X" FontSize="Small" HorizontalOptions="Center" Grid.Column="1"/>
+            <Label x:Name="lScore" Text="Score: X" FontSize="Small" HorizontalOptions="Center" Grid.Column="1"/>
         </Grid>
 
         <ContentView x:Name="cvCurrentQuest" Grid.Row="1"/>
 
         <Grid Grid.Row="2">
-            <Grid x:Name="gManual" ColumnDefinitions="*, 2.5*" ColumnSpacing="7.5" IsVisible="False">
-                <Button Text="Submit" Grid.Column="0" Clicked="bSubmit_Clicked"/>
-                <Entry x:Name="eAnswer" Placeholder="Answer" Grid.Column="1" />
+            <Grid x:Name="gManual" ColumnDefinitions="2.5*, *" ColumnSpacing="7.5" IsVisible="False">
+                <Entry x:Name="eAnswer" Placeholder="Answer" Grid.Column="0" />
+                <Button Text="Submit" Grid.Column="1" Clicked="bSubmit_Clicked"/>
             </Grid>
 
             <Grid x:Name="gAuto" IsVisible="False">

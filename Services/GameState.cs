@@ -8,6 +8,8 @@ namespace FindShaulsTreasure.Services
 {
     internal static class GameState
     {
+        public const int QuestScore = 100;
+
         public static int TeamId { get; set; } = -1;
         public static int Score { get; set; } = 0;
     }
