@@ -4,25 +4,31 @@ using System.Xml.Serialization;
 
 namespace FindShaulsTreasure.Pages;
 
-
-
 public partial class QuestHolder : ContentPage
 {
-	int currentTeamId = 5;
+	int teamId = 5;
 
 	BaseQuestView? currentQuest;
+	Queue<BaseQuestView> quests = new Queue<BaseQuestView>();
 
-	public QuestHolder()
+    public QuestHolder()
 	{
 		InitializeComponent();
 
-		SetQuest(new Quests.Group_00.Quest_00(currentTeamId));
+        quests.Enqueue(new Quests.Group_00.Quest_00(teamId));
+
+		for (int i = 0; i < teamId % quests.Count; i++)
+		{
+			quests.Enqueue(quests.Dequeue());
+		}
+
+		LoadNext();
 	}
 
 	private void SetQuest(BaseQuestView quest)
 	{
 		currentQuest= quest;
-		cvCurrentQuest = quest;
+		cvCurrentQuest.Content = quest;
 
 		QuestInfo data = currentQuest.Data;
 		lQuestName.Text= data.QuestName;
@@ -34,6 +40,18 @@ public partial class QuestHolder : ContentPage
         if (isManual) eAnswer.Text = "";
     }
 
+	private void LoadNext()
+	{
+		if (quests.Count > 0)
+		{
+			SetQuest(quests.Dequeue());
+		}
+		else
+		{
+			// End Game Logic
+		}
+	}
+
 	private async void bSubmit_Clicked(object sender, EventArgs e)
 	{
 		if (currentQuest == null) return;
@@ -44,7 +62,7 @@ public partial class QuestHolder : ContentPage
 		{
 			if (eAnswer.Text.Trim() == data.QuestAnswer.Trim())
 			{
-                await DisplayAlert("Success", "Correct answer!", "OK");
+                LoadNext();
             }
 			else
 			{
@@ -55,7 +73,7 @@ public partial class QuestHolder : ContentPage
 		{
             if (data.QuestSuccess)
             {
-                await DisplayAlert("Success", "Quest complete!", "OK");
+				LoadNext();
             }
             else
             {
