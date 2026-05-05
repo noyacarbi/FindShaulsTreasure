@@ -1,13 +1,12 @@
 using FindShaulsTreasure.Models;
 using FindShaulsTreasure.Quests;
+using FindShaulsTreasure.Services;
 using System.Xml.Serialization;
 
 namespace FindShaulsTreasure.Pages;
 
 public partial class QuestHolder : ContentPage
 {
-	int teamId = 5;
-
 	BaseQuestView? currentQuest;
 	Queue<BaseQuestView> quests = new Queue<BaseQuestView>();
 
@@ -15,9 +14,9 @@ public partial class QuestHolder : ContentPage
 	{
 		InitializeComponent();
 
-        quests.Enqueue(new Quests.Group_00.Quest_00(teamId));
+        quests.Enqueue(new Quests.Group_00.Quest_00(GameState.TeamId));
 
-		for (int i = 0; i < teamId % quests.Count; i++)
+		for (int i = 0; i < GameState.TeamId % quests.Count; i++)
 		{
 			quests.Enqueue(quests.Dequeue());
 		}
@@ -77,7 +76,7 @@ public partial class QuestHolder : ContentPage
             }
             else
             {
-                await DisplayAlert("Wait", "Quest tasks not finished.", "OK");
+                await DisplayAlert("Wait", "Quest not finished.", "OK");
             }
         }
 	}
