@@ -13,9 +13,15 @@
 
         <ContentView x:Name="cvCurrentQuest" Grid.Row="1"/>
 
-        <Grid ColumnDefinitions="2.5*, *" Grid.Row="2" ColumnSpacing="7.5">
-            <Entry Placeholder="Password" HorizontalOptions="Fill" Grid.Column="0"/>
-            <Button Text="Submit" Grid.Column="1"/>
+        <Grid Grid.Row="2">
+            <Grid x:Name="gManual" ColumnDefinitions="*, 2.5*" ColumnSpacing="7.5" IsVisible="False">
+                <Button Text="Submit" Grid.Column="0" Clicked="bSubmit_Clicked"/>
+                <Entry x:Name="eAnswer" Placeholder="Answer" Grid.Column="1" />
+            </Grid>
+
+            <Grid x:Name="gAuto" IsVisible="False">
+                <Button Text="Continue" HorizontalOptions="Fill" Clicked="bSubmit_Clicked"/>
+            </Grid>
         </Grid>
 
     </Grid>
