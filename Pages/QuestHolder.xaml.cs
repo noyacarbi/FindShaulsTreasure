@@ -1,7 +1,6 @@
 using FindShaulsTreasure.Models;
 using FindShaulsTreasure.Quests;
 using FindShaulsTreasure.Services;
-using System.Xml.Serialization;
 
 namespace FindShaulsTreasure.Pages;
 
@@ -15,15 +14,16 @@ public partial class QuestHolder : ContentPage
 		InitializeComponent();
 
         quests.Enqueue(new Quests.Group_00.Quest_00(GameState.TeamId));
-        quests.Enqueue(new Quests.Group_00.Quest_00(GameState.TeamId));
-        quests.Enqueue(new Quests.Group_00.Quest_00(GameState.TeamId));
-        quests.Enqueue(new Quests.Group_00.Quest_00(GameState.TeamId));
-        quests.Enqueue(new Quests.Group_00.Quest_00(GameState.TeamId));
 
         for (int i = 0; i < GameState.TeamId % quests.Count; i++)
 		{
 			quests.Enqueue(quests.Dequeue());
 		}
+
+		for (int i = 0; i < GameState.QuestIndex; i++)
+		{
+            if (quests.Count > 0) quests.Dequeue();
+        }
 
 		LoadNext();
 	}
@@ -67,7 +67,8 @@ public partial class QuestHolder : ContentPage
 		{
 			if (eAnswer.Text.Trim() == data.QuestAnswer.Trim())
 			{
-				GameState.Score += (GameState.QuestScore * data.ScorePercent) / 100;
+				GameState.Score += (int)(GameState.QuestScore * (data.ScorePercent / 100.0));
+                GameState.QuestIndex++;
                 LoadNext();
             }
 			else
@@ -79,7 +80,8 @@ public partial class QuestHolder : ContentPage
 		{
             if (data.QuestSuccess)
             {
-                GameState.Score += (GameState.QuestScore * data.ScorePercent) / 100;
+                GameState.Score += (int)(GameState.QuestScore * (data.ScorePercent / 100.0));
+                GameState.QuestIndex++;
                 LoadNext();
             }
             else

@@ -61,7 +61,7 @@ namespace FindShaulsTreasure.Models
         /// <summary>
         /// The percentage of the score to award the user (Used only if <b>QuestType</b> is <b>Automatic</b>).
         /// </summary>
-        public int ScorePercent { get; set; }
+        public double ScorePercent { get; set; }
 
         /// <summary>
         /// Creates a new <see cref="QuestInfo"/> instance.
