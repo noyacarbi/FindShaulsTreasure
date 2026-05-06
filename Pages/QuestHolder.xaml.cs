@@ -1,13 +1,18 @@
 using FindShaulsTreasure.Models;
 using FindShaulsTreasure.Quests;
 using FindShaulsTreasure.Services;
+using System.Diagnostics;
 
 namespace FindShaulsTreasure.Pages;
 
 public partial class QuestHolder : ContentPage
 {
+	const int HOLD_TIME = 5000;
+
 	BaseQuestView? currentQuest;
 	Queue<BaseQuestView> quests = new Queue<BaseQuestView>();
+
+    Stopwatch holdTimer = new();
 
     public QuestHolder()
 	{
@@ -67,7 +72,7 @@ public partial class QuestHolder : ContentPage
 		{
 			if (eAnswer.Text.Trim() == data.QuestAnswer.Trim())
 			{
-				GameState.Score += (int)(GameState.QuestScore * (data.ScorePercent / 100.0));
+				GameState.Score += (int)(GameState.QUEST_SCORE * (data.ScorePercent / 100.0));
                 GameState.QuestIndex++;
                 LoadNext();
             }
@@ -80,13 +85,38 @@ public partial class QuestHolder : ContentPage
 		{
             if (data.QuestSuccess)
             {
-                GameState.Score += (int)(GameState.QuestScore * (data.ScorePercent / 100.0));
+                GameState.Score += (int)(GameState.QUEST_SCORE * (data.ScorePercent / 100.0));
                 GameState.QuestIndex++;
                 LoadNext();
             }
             else
             {
                 await DisplayAlert("Wait", "Quest not finished.", "OK");
+            }
+        }
+	}
+
+
+    private void OnSecret_Pressed(object sender, EventArgs e)
+    {
+		holdTimer.Start();
+    }
+
+	private async void OnSecret_Released(object sender, EventArgs e)
+	{
+        holdTimer.Stop();
+
+        if (holdTimer.ElapsedMilliseconds >= HOLD_TIME)
+		{
+            bool reset = await DisplayAlert("Reset", "Reset game progress?", "Yes", "No");
+
+			if (reset)
+			{
+				GameState.Clear();
+                if (Application.Current?.Windows.Count > 0)
+                {
+                    Application.Current.Windows[0].Page = new AdminPanel();
+                }
             }
         }
 	}

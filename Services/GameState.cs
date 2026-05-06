@@ -8,7 +8,8 @@ namespace FindShaulsTreasure.Services
 {
     internal static class GameState
     {
-        public const int QuestScore = 100;
+        public const int QUEST_SCORE = 100;
+        public const string SECRET = "1234";
 
         public static int TeamId { 
             get => Preferences.Default.Get("team_id", -1); 
