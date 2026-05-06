@@ -11,7 +11,9 @@ namespace FindShaulsTreasure
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new QuestHolder());
+            Page startPage = Services.GameState.TeamId == -1 ? new AdminPanel() : new QuestHolder();
+
+            return new Window(startPage);
         }
     }
 }

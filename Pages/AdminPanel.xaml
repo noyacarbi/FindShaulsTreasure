@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FindShaulsTreasure.Pages.AdminPanel"
+             Title="AdminPanel">
+    <VerticalStackLayout Spacing="15" Padding="30" VerticalOptions="Center">
+        <Entry x:Name="ePass" Placeholder="Admin Password" IsPassword="True" />
+        <Entry x:Name="eTeam" Placeholder="Team ID" Keyboard="Numeric" />
+
+        <Button Text="Start Game" Clicked="bStart_Clicked" />
+    </VerticalStackLayout>
+</ContentPage>
