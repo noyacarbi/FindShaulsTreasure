@@ -22,7 +22,7 @@
             </Grid>
 
             <Grid x:Name="gAuto" IsVisible="False">
-                <Button Text="Continue" HorizontalOptions="Fill" Clicked="bSubmit_Clicked"/>
+                <Button x:Name="bContinue" Text="Continue" HorizontalOptions="Fill" IsEnabled="False" Clicked="bSubmit_Clicked"/>
             </Grid>
         </Grid>
 

@@ -5,5 +5,6 @@
              x:Class="FindShaulsTreasure.Quests.Group_00.Quest_00">
     <VerticalStackLayout>
         <Label x:Name="lTeam" />
+        <Button Text="Click me" Clicked="Button_Clicked" />
     </VerticalStackLayout>
 </quests:BaseQuestView>

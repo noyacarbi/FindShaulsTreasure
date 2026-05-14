@@ -9,6 +9,7 @@ public partial class QuestHolder : ContentPage
 {
 	const int HOLD_TIME = 5000;
 
+
 	BaseQuestView? currentQuest;
 	Queue<BaseQuestView> quests = new Queue<BaseQuestView>();
 
@@ -18,7 +19,7 @@ public partial class QuestHolder : ContentPage
 	{
 		InitializeComponent();
 
-        quests.Enqueue(new Quests.Group_00.Quest_00(GameState.TeamId));
+        quests.Enqueue(new Quests.Group_00.Quest_00(GameState.TeamId, this));
 
         for (int i = 0; i < GameState.TeamId % quests.Count; i++)
 		{
@@ -46,6 +47,7 @@ public partial class QuestHolder : ContentPage
         bool isManual = data.QuestType == Models.QuestType.Manual;
         gManual.IsVisible = isManual;
         gAuto.IsVisible = !isManual;
+		bContinue.IsEnabled = false;
 
         if (isManual) eAnswer.Text = "";
     }
@@ -119,5 +121,10 @@ public partial class QuestHolder : ContentPage
                 }
             }
         }
+	}
+
+	public void EnableContiue()
+	{
+		bContinue.IsEnabled = true;
 	}
 }
